@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Tutor</title>
+    <link href="styles.css" rel="stylesheet"/>
+    <script  type="module" src="script.js" defer></script>
+</head>
+<body>
+    <div class="panel configuration-panel">
+        <h3>Application settings</h3>
+        Name: <input type="text" name="name"/><br>
+        Numbers range:<br>
+        a: <input type="text" id="number_a" class="number-range" value="1-9"/>
+        b: <input type="text" id="number_b" class="number-range" value="1-9"/>
+    </div>
+    <div class="panel questions-panel">
+        <h3>Test launch and tasks</h3>
+        <button data-start>START</button>
+        <div class="question" id="question"></div>
+        <div class="response">
+            <input type="text" id="number_response" class="number"/>
+            <button data-ok>OK</button>
+        </div>
+        <div data-question-error> </div>
+        <button>RESET</button>
+    </div>
+    <div class="panel results-panel">
+        <h3>Test results</h3>
+    </div>
+</body>
+</html>
