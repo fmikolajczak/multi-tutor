@@ -1,11 +1,6 @@
 const waitForStart = 3
 
-function checkRange(x) {
-    // input x should be 2 nubmers divded by -
-    let range = x.split('-')
-    if(range.length != 2) return false
-    return [Number(range[0]), Number(range[1])]
-}
+const checkRange = require('./lib')
 
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
@@ -67,11 +62,11 @@ function startQuiz () {
     showMessage(`${currentQuestion.varA} x ${currentQuestion.varB} = `)
 }
 
-export function startButtonListener() {
+function startButtonListener() {
     start()
 }
 
-export function okButtonListener() {
+function okButtonListener() {
     // do nothing if there is no question
     if (! currentQuestion) return
     // check if answer is correct
@@ -103,3 +98,4 @@ console.log('responseInput ' + responseInput)
 
 const questionError = document.querySelector('[data-question-error]')
 console.log('questionError ' + questionError)
+
