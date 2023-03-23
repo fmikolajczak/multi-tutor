@@ -1,6 +1,14 @@
+// constance definitions
 const waitForStart = 3
 
-// import { checkRange } from "./lib.js"
+
+// GUI element bindings
+const questionDiv = document.getElementById('question')
+const startButton = document.querySelector('[data-start]')
+const okButton = document.querySelector('[data-ok]')
+const responseInput = document.getElementById('number_response')
+const questionError = document.querySelector('[data-question-error]')
+const rangeInput = document.getElementById('range')
 
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
@@ -10,18 +18,12 @@ function showMessage(msg, div = document.getElementById('question')) {
     div.innerHTML = msg
 }
 
-const quizParameters = {
-    rangeA: null,
-    rangeB: null,
-}
+// range from which quiz choose numbers, array of 2 numbers [a, b]
+let range
 
 function start() {
-    const inputA = document.getElementById('number_a')
-    const inputB = document.getElementById('number_b')
-    console.log(inputA.value)
-    const rangeA = checkRange(inputA.value)
-    const rangeB = checkRange(inputB.value)
-    
+    range = parseRange(rangeInput.value)
+
     if (! rangeA)  {
         showErrorMessage('wrong A range')
         return
@@ -79,23 +81,7 @@ function okButtonListener() {
     // generate and ask next question or end the test if there was enough questions
     startQuiz()
 }
-// GUI element bindings
-console.log('running the script!')
 
-const questionDiv = document.getElementById('question')
-console.log('questionDiv: ' + questionDiv)
 
-const startButton = document.querySelector('[data-start]')
-console.log('startButton: ' + startButton)
-
+// events bindings
 startButton.addEventListener('click', startButtonListener)
-
-const okButton = document.querySelector('[data-ok]')
-okButton.addEventListener('click', okButtonListener)
-
-const responseInput = document.getElementById('number_response')
-console.log('responseInput ' + responseInput)
-
-const questionError = document.querySelector('[data-question-error]')
-console.log('questionError ' + questionError)
-
