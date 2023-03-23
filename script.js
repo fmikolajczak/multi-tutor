@@ -21,32 +21,13 @@ function showMessage(msg, div = document.getElementById('question')) {
 // range from which quiz choose numbers, array of 2 numbers [a, b]
 let range
 
-function start() {
-    range = parseRange(rangeInput.value)
-
-    if (! rangeA)  {
-        showErrorMessage('wrong A range')
-        return
-    }
-    if (! rangeB) {
-        showErrorMessage('wrong B range')
-        return
-    }
-    quizParameters.rangeA = rangeA
-    quizParameters.rangeB = rangeB
-    
-    showMessage('game is starting! ;)')
-    let counter = waitForStart
-    function countDown() { setTimeout(() => {
-        showMessage(--counter) 
-        if (counter) { countDown() } else { startQuiz()}}, 1000)}
-    countDown()
+function getRandomFromRange(range) {
+    return range[0] + Math.floor(Math.random() * (range[1] - range[0]))
 }
 
-function newQuestion(parameters) {
-    parameters.rangeA[0]
-    const varA = parameters.rangeA[0] + Math.floor(Math.random() * (parameters.rangeA[1] - parameters.rangeA[0]))
-    const varB = parameters.rangeB[0] + Math.floor(Math.random() * (parameters.rangeB[1] - parameters.rangeB[0]))
+function newQuestion(range) {
+    const varA = getRandomFromRange(range)
+    const varB = getRandomFromRange(range)
     return {
         varA: varA, 
         varB: varB,
@@ -60,12 +41,8 @@ let questionStack = []
 function startQuiz () {
     responseInput.value = ''
     questionError.innerHTML = ''
-    currentQuestion = newQuestion(quizParameters)
+    currentQuestion = newQuestion(range)
     showMessage(`${currentQuestion.varA} x ${currentQuestion.varB} = `)
-}
-
-function startButtonListener() {
-    start()
 }
 
 function okButtonListener() {
@@ -82,6 +59,33 @@ function okButtonListener() {
     startQuiz()
 }
 
+function countDown(counter, callback) { 
+    setTimeout(() => {
+    showMessage(--counter) 
+    if (counter) { countDown(counter,callback) } else { callback()}}, 1000)
+}
+
+function start() {
+    // check settings
+    range = parseRange(rangeInput.value)
+    if (! range)  {
+        showErrorMessage('wrong A range')
+        return
+    }
+
+    showMessage('game is starting! ;)')
+    countDown(waitForStart, startQuiz)
+    console.log(`waitForStart: ${waitForStart}`)
+}
+
+function startButtonListener() {
+    // TODO: check if state is ok to start
+    start()
+}
 
 // events bindings
 startButton.addEventListener('click', startButtonListener)
+okButton.addEventListener('click', okButtonListener)
+responseInput.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter') okButtonListener(e)
+})
