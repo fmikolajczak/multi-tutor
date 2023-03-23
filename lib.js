@@ -1,5 +1,4 @@
-const { isNumber } = require("util")
-const { isNumberObject } = require("util/types")
+
 
 function checkRange(x) {
     // input x should be 2 nubmers separated by -

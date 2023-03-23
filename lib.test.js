@@ -1,4 +1,4 @@
-
+// import { checkRange } from "./lib.js";
 const checkRange = require('./lib')
 
 test('test correct argument: checkRange(3-6)', () => {

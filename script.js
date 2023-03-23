@@ -1,6 +1,6 @@
 const waitForStart = 3
 
-const checkRange = require('./lib')
+// import { checkRange } from "./lib.js"
 
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
