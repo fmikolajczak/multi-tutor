@@ -18,5 +18,9 @@ body {
     padding: 20px;
 }
 
+table td, table td * {
+    vertical-align: top;
+}
+
 
 
