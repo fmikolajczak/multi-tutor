@@ -28,27 +28,31 @@ function getRandomFromRange(range) {
     return range[0] + Math.floor(Math.random() * (range[1] - range[0]))
 }
 
+let questionPool
+
 function newQuestion(range) {
-    const varA = getRandomFromRange(range)
-    const varB = getRandomFromRange(range)
-    return {
-        varA: varA, 
-        varB: varB,
-        answer: varA * varB,
-        wrongAnswerCount: 0,
-    }
+    if (! questionPool) questionPool = new QuestionPool(range)
+    return questionPool.nextQuestion()
 }
 
 let currentQuestion 
 let questionStack = []
 let questionLeft
+let quizHistory = []
+let currentQuiz = {
+    startTime: undefined,
+    endTime: undefined,
+    questions: undefined,
+    correctAnswers: undefined,    
+}
 
 function showNextQuestion () {
     questionLeft--
     responseInput.value = ''
     questionError.innerHTML = ''
     currentQuestion = newQuestion(range)
-    showMessage(`${currentQuestion.varA} x ${currentQuestion.varB} = `)
+    console.log(`showNextQuestion: currentQuestion: ${currentQuestion}`)
+    showMessage(`${currentQuestion.a} x ${currentQuestion.b} = `)
     responseInput.focus()
     console.log(`questionLeft: ${questionLeft}`)
 }
@@ -56,8 +60,8 @@ function showNextQuestion () {
 function updateQuestionLog(questionStack) {
     questionLog.innerHTML =''
     questionStack.forEach( passQuestion => {
-        questionLog.innerHTML = passQuestion.varA + ' x ' 
-        + passQuestion.varB + ' = ' + passQuestion.answer + '<br>' 
+        questionLog.innerHTML = passQuestion.a + ' x ' 
+        + passQuestion.b + ' = ' + passQuestion.answer + '<br>' 
         + questionLog.innerHTML
     })
 }
@@ -85,7 +89,15 @@ function okButtonListener() {
 }
 
 function clearQuestionPanel() {
+    currentQuestion = ''
+    responseInput.value = ''
     questionDiv.innerHTML = 'koniec testu!'
+}
+
+// clear UI beetween sets
+function clearQuiz() {
+    resultMessage.innerHTML = ''
+    questionLog.innerHTML = ''
 }
 
 
@@ -105,6 +117,7 @@ function countDown(counter, callback) {
 }
 
 function start() {
+    clearQuiz()
     // check settings
     range = parseRange(rangeInput.value)
     if (! range)  {

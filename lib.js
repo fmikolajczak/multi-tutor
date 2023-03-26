@@ -32,4 +32,36 @@ function parseRange(range) {
     }
 }
 
-module.exports = parseRange
+class QuestionPool {
+    constructor(range) {
+        this.queryList = []
+        this.usedQueries = []
+        for (let i = range[0]; i <= range[1] ; i++ ) {
+            for( let j = range[0] ; j <= range[1] ; j ++) {
+                let query = {
+                    a: i,
+                    b: j,
+                    answer: i * j,
+                    wrongAnswerCount: 0,
+                }
+                console.log(`constructor query: ${query.a} ${query.b}`)
+                this.queryList.push(query)
+            }
+        }
+    }
+
+    nextQuestion() {
+        if(this.queryList.length > 0) {
+            let index = Math.floor(Math.random() * this.queryList.length) 
+            console.log(`nextQuestion index: ${index}`)
+            let currentQuestion = this.queryList.splice(index, 1)[0]
+            this.usedQueries.push(currentQuestion)
+            console.log(`QuestionPool.nextQuestion(): ${currentQuestion.a} ${currentQuestion.b}`)
+            return currentQuestion
+        }
+    }
+}
+
+if (typeof module !== 'undefined') {
+    module.exports = parseRange
+}
