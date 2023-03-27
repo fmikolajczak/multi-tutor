@@ -50,7 +50,7 @@ class QuestionPool {
         }
     }
 
-    nextQuestion() {
+    get nextQuestion() {
         if(this.queryList.length > 0) {
             let index = Math.floor(Math.random() * this.queryList.length) 
             console.log(`nextQuestion index: ${index}`)
@@ -60,8 +60,32 @@ class QuestionPool {
             return currentQuestion
         }
     }
+
+    get allCount() {
+        return this.queryList.length + this.usedQueries.length
+    }
+
+    get answeredCount() {
+        return this.usedQueries.length
+    }
+
+    get wrongCount() {
+        let count = 0 
+        this.usedQueries.forEach(question => {
+            if(question.wrongAnswerCount) count += question.wrongAnswerCount
+        });
+        return count
+    }
 }
 
 if (typeof module !== 'undefined') {
     module.exports = parseRange
+}
+
+function showQueryStats(questionPool, statsDiv) {
+    // TODO: complete the function
+    let text_stats = `overall questions: ${questionPool.allCount}<br>`
+    text_stats += `answered questions: ${questionPool.answeredCount}<br>`
+    text_stats += `wrong answers: ${questionPool.wrongCount}<br>`
+    statsDiv.innerHTML = text_stats
 }

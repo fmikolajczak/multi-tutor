@@ -12,6 +12,7 @@ const questionError = document.querySelector('[data-question-error]')
 const rangeInput = document.getElementById('range')
 const questionLog = document.getElementById('response_log')
 const resultMessage = document.getElementById('result_message')
+const statsDiv = document.getElementById('statistics')
 
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
@@ -32,7 +33,7 @@ let questionPool
 
 function newQuestion(range) {
     if (! questionPool) questionPool = new QuestionPool(range)
-    return questionPool.nextQuestion()
+    return questionPool.nextQuestion
 }
 
 let currentQuestion 
@@ -54,7 +55,6 @@ function showNextQuestion () {
     console.log(`showNextQuestion: currentQuestion: ${currentQuestion}`)
     showMessage(`${currentQuestion.a} x ${currentQuestion.b} = `)
     responseInput.focus()
-    console.log(`questionLeft: ${questionLeft}`)
 }
 
 function updateQuestionLog(questionStack) {
@@ -68,8 +68,11 @@ function updateQuestionLog(questionStack) {
 
 
 function okButtonListener() {
-    // do nothing if there is no question
-    if (! currentQuestion) return
+    // if there is no question then start new quiz
+    if (! currentQuestion) {
+        start()
+        return
+    }
     // check if answer is correct
     if (responseInput.value != currentQuestion.answer) { 
         questionError.innerHTML = 'zła odpowiedź! spróbuj jeszcze raz!'
@@ -79,6 +82,7 @@ function okButtonListener() {
     // save time and stack question 
     questionStack.push(currentQuestion)
     updateQuestionLog(questionStack)
+    showQueryStats(questionPool, statsDiv)
     // generate and ask next question or end the test if there was enough questions
     if (questionLeft > 0) {
         showNextQuestion()
