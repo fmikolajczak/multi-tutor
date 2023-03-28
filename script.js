@@ -100,6 +100,7 @@ function clearQuestionPanel() {
 
 // clear UI beetween sets
 function clearQuiz() {
+    questionStack = []
     resultMessage.innerHTML = ''
     questionLog.innerHTML = ''
 }
