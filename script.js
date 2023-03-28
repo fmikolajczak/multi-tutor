@@ -75,7 +75,7 @@ function okButtonListener() {
     }
     // check if answer is correct
     if (responseInput.value != currentQuestion.answer) { 
-        questionError.innerHTML = 'zła odpowiedź! spróbuj jeszcze raz!'
+        questionError.innerHTML = 'wrong answer! try again'
         currentQuestion.wrongAnswerCount++
         return
     }
@@ -95,7 +95,7 @@ function okButtonListener() {
 function clearQuestionPanel() {
     currentQuestion = ''
     responseInput.value = ''
-    questionDiv.innerHTML = 'koniec testu!'
+    questionDiv.innerHTML = 'end of set!'
 }
 
 // clear UI beetween sets
@@ -111,8 +111,8 @@ function showSummary(questionStack) {
     questionStack.forEach( answer => {
         if (answer.wrongAnswerCount > 0) wrongAnswers++
     })
-    resultMessage.innerHTML = `Quiz ukończony! Dobre odpowiedzi, ` + 
-         `za pierwszym razem: ${questionStack.length - wrongAnswers}`
+    resultMessage.innerHTML = `Quiz ends! good answers, ` + 
+         `first time: ${questionStack.length - wrongAnswers}`
 }
 
 function countDown(counter, callback) { 
