@@ -33,7 +33,12 @@ function parseRange(range) {
 }
 
 class QuestionPool {
-    constructor(range) {
+    constructor(range, questionsLeft, questonsAsked) {
+        if (questionsLeft && questonsAsked) {
+            this.queryList = questionsLeft
+            this.usedQueries = questonsAsked
+          return   
+        }
         this.queryList = []
         this.usedQueries = []
         for (let i = range[0]; i <= range[1] ; i++ ) {
@@ -50,14 +55,18 @@ class QuestionPool {
         }
     }
 
+    correctAnswer(question) {
+        let currentQuestion = this.queryList.splice(this.index, 1)[0]
+        currentQuestion.wrongAnswerCount = question.wrongAnswerCount
+        this.usedQueries.push(currentQuestion)
+        console.log(`question answered: ${currentQuestion.a}x${currentQuestion.b}=${currentQuestion.answer}`)
+    }
+
     get nextQuestion() {
         if(this.queryList.length > 0) {
-            let index = Math.floor(Math.random() * this.queryList.length) 
-            console.log(`nextQuestion index: ${index}`)
-            let currentQuestion = this.queryList.splice(index, 1)[0]
-            this.usedQueries.push(currentQuestion)
-            console.log(`QuestionPool.nextQuestion(): ${currentQuestion.a} ${currentQuestion.b}`)
-            return currentQuestion
+            this.index = Math.floor(Math.random() * this.queryList.length) 
+            console.log(`nextQuestion index: ${this.index}`)
+            return this.queryList[this.index]
         }
     }
 
@@ -75,6 +84,14 @@ class QuestionPool {
             if(question.wrongAnswerCount) count += question.wrongAnswerCount
         });
         return count
+    }
+
+    get questionsAsked() {
+        return this.usedQueries
+    }
+
+    get questionsLeft() {
+        return this.queryList
     }
 }
 
