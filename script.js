@@ -13,6 +13,8 @@ const rangeInput = document.getElementById('range')
 const questionLog = document.getElementById('response_log')
 const resultMessage = document.getElementById('result_message')
 const statsDiv = document.getElementById('statistics')
+const nameInput = document.getElementById('name')
+const greetMsgDiv = document.getElementById('greet_msg')
 
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
@@ -130,6 +132,7 @@ function start() {
         return
     }
     questionLeft = questionsPerSet
+    saveName(nameInput.value)
     showMessage('game is starting! ;)')
     countDown(waitForStart, showNextQuestion)
     console.log(`waitForStart: ${waitForStart}`)
@@ -140,9 +143,28 @@ function startButtonListener() {
     start()
 }
 
+function nameInputListener() {
+    if (nameInput.value.trim() != '') {
+        greetMsgDiv.innerHTML = `Welcome ${nameInput.value}!<br> Lets do the test :)`
+    }
+}
+
+function saveName(name) {
+    if(name) localStorage.setItem('name', name)
+}
+
+function loadStorage() {
+    let name = localStorage.getItem('name')
+    if(name) nameInput.value = name
+}
+
 // events bindings
 startButton.addEventListener('click', startButtonListener)
 okButton.addEventListener('click', okButtonListener)
 responseInput.addEventListener('keydown', (e) => {
     if (e.code === 'Enter') okButtonListener(e)
 })
+
+nameInput.addEventListener('keyup', nameInputListener)
+
+loadStorage()

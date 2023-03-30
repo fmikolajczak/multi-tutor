@@ -9,9 +9,16 @@ body {
 }
 
 
-
+div {
+    border: 1px;
+    border-style: dotted;
+    border-color: darkgrceen;
+}
 
 .panel {
+    border-width: 2px;
+    border-style: dashed;
+    display: flex;
     background-color: lightgray;
     border-color: black;
     margin: 20px;
@@ -22,5 +29,8 @@ table td, table td * {
     vertical-align: top;
 }
 
-
+.greet_msg {
+        min-width: 50px;
+        min-height: 50px;
+}
 
