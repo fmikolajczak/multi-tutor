@@ -35,6 +35,8 @@ let questionPool
 
 function newQuestion(range) {
     if (! questionPool) questionPool = new QuestionPool(range)
+    // save question state and pool
+    saveQuestions(questionPool)
     return questionPool.nextQuestion
 }
 
@@ -75,20 +77,21 @@ function okButtonListener() {
         start()
         return
     }
-    // check if answer is correct
+    // check answer
     if (responseInput.value != currentQuestion.answer) { 
         questionError.innerHTML = 'wrong answer! try again'
         currentQuestion.wrongAnswerCount++
         return
     }
-    // save time and stack question 
-    questionStack.push(currentQuestion)
+    // when asnwer is correct
+    questionPool.correctAnswer(currentQuestion)
     updateQuestionLog(questionStack)
     showQueryStats(questionPool, statsDiv)
     // generate and ask next question or end the test if there was enough questions
     if (questionLeft > 0) {
         showNextQuestion()
     } else {
+        saveQuestions(questionPool)
         clearQuestionPanel()
         showSummary(questionStack)
     }
@@ -154,8 +157,28 @@ function saveName(name) {
 }
 
 function loadStorage() {
+    // player name
     let name = localStorage.getItem('name')
     if(name) nameInput.value = name
+
+    // load questions
+    console.log('try to load questions from storage')
+    let questionsAsked = localStorage.getItem('questionsAsked')
+    let questionsLeft = localStorage.getItem('questionsLeft')
+    console.log(`questionsAsked: ${questionsAsked}`)
+    console.log(`questionsLeft: ${questionsLeft}`)
+    if (questionsLeft) {
+        questionPool = new QuestionPool(undefined,
+            JSON.parse(questionsLeft),
+            JSON.parse(questionsAsked))
+        showQueryStats(questionPool, statsDiv)
+        console.log('ok, i had have loaded data from localStorage')
+    }    
+}
+
+function saveQuestions(questionPool) {
+    localStorage.setItem('questionsLeft', JSON.stringify(questionPool.questionsLeft))
+    localStorage.setItem('questionsAsked', JSON.stringify(questionPool.questionsAsked))
 }
 
 // events bindings
