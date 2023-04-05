@@ -191,8 +191,7 @@ form.addEventListener('submit', function(e) {
 startButton.addEventListener('click', startButtonListener)
 okButton.addEventListener('click', okButtonListener)
 responseInput.addEventListener('keydown', (e) => {
-    resultMessage.innerHTML = `responseInput: ${e.code}`
-    if (e.code === 13) okButtonListener(e)
+    if (e.code === 'Enter') okButtonListener(e)
 })
 
 nameInput.addEventListener('keyup', nameInputListener)
