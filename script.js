@@ -15,6 +15,7 @@ const resultMessage = document.getElementById('result_message')
 const statsDiv = document.getElementById('statistics')
 const nameInput = document.getElementById('name')
 const greetMsgDiv = document.getElementById('greet_msg')
+const form = document.getElementsByTagName('form')?.item(0)
 
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
@@ -181,13 +182,20 @@ function saveQuestions(questionPool) {
     localStorage.setItem('questionsAsked', JSON.stringify(questionPool.questionsAsked))
 }
 
+// prevent form from submitting
+form.addEventListener('submit', function(e) {
+    e.preventDefault()
+})
+
 // events bindings
 startButton.addEventListener('click', startButtonListener)
 okButton.addEventListener('click', okButtonListener)
 responseInput.addEventListener('keydown', (e) => {
-    if (e.code === 'Enter') okButtonListener(e)
+    resultMessage.innerHTML = `responseInput: ${e.code}`
+    if (e.code === 13) okButtonListener(e)
 })
 
 nameInput.addEventListener('keyup', nameInputListener)
+
 
 loadStorage()
