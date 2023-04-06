@@ -1,3 +1,5 @@
+# Multi-tutor
+
 It's simple learning project.
 
 For myself to get familiar with Javascript and CSS and for my kid to teach her math ;)
