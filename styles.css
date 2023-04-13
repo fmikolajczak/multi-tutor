@@ -10,7 +10,7 @@ body {
     margin: 0;
     display: flex;
     width: 100vw;
-    height: 100vh;
+    height: 50vh;
     justify-content: center;
     align-items: center;
     background-color: hsl(200, 100%, 20%);
