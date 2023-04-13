@@ -1,53 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multiplication Tutor</title>
-    <link href="styles.css" rel="stylesheet"/>
+    <link href="styles.css" rel="stylesheet" />
     <script src="lib.js"></script>
     <script src="script.js" defer></script>
 </head>
+
 <body>
-    <div class="panel configuration-panel">
-        <div>
-            <h3>Application settings</h3>
-            Name: <input type="text" id="name" name="Your name"/><br>
-            Range of nubmers: 
-            <input type="text" id="range" class="number-range" value="1-10" maxlength="7" size="7">
+    <div class="container">
+        <div id="question-container" class="panel questions-panel">
+            <span class="question" id="question"></span>
+                <form>
+                    <input type="text" id="response" class="response hide" />
+                </form>
+            <button data-ok class="ok-button hide"">OK</button>
+            <div data-question-error> </div>
+            <div class="respose_log hide" id="response_log"></div>
+            <div class="statistics hide" id="statistics"></div>
         </div>
-        <div id="greet_msg" class="greet_msg">
-            
+        <div class="controls">
+            <button class="ok-button hide">RESET</button>
+            <button class="start-button" data-start>START</button>
         </div>
-    </div>
-    <div class="panel questions-panel">
-        <h3>Test launch and tasks</h3>
-        <table><tr><td>
-        <button data-start>START</button>
-        <div class="question" id="question"></div>
-        <div class="response">
-            <form>
-            <input type="text" id="number_response" class="number"/>
-            <button data-ok>OK</button>
-            </form>
+        <div class="panel configuration-panel hide">
+            <div>
+                <h3>Application settings</h3>
+                Name: <input type="text" id="name" name="Your name" /><br>
+                Range of numbers:
+                <input type="text" id="range" class="number-range" value="1-10" maxlength="7" size="7">
+            </div>
+            <div id="greet_msg" class="greet_msg">
+            </div>
         </div>
-        <div data-question-error> </div>
-        <button>RESET</button>
-    </td>
-<td>
-   <div class="respose_log" id="response_log">
-       
-   </div> 
-<td>
-    <div class="statistics" id="statistics">
-        
-    </div>
-</td></tr></table>
-    </div>
-    <div class="panel results-panel">
-        <h3>Test results</h3>
-        <div id="result_message"></div>
+        <div class="panel results-panel hide">
+            <h3>Test results</h3>
+            <div id="result_message"></div>
+        </div>
     </div>
 </body>
+
 </html>

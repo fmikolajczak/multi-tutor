@@ -7,7 +7,7 @@ const questionsPerSet = 5
 const questionDiv = document.getElementById('question')
 const startButton = document.querySelector('[data-start]')
 const okButton = document.querySelector('[data-ok]')
-const responseInput = document.getElementById('number_response')
+const responseInput = document.getElementById('response')
 const questionError = document.querySelector('[data-question-error]')
 const rangeInput = document.getElementById('range')
 const questionLog = document.getElementById('response_log')
@@ -84,7 +84,8 @@ function okButtonListener() {
         currentQuestion.wrongAnswerCount++
         return
     }
-    // when asnwer is correct
+    // when answer is correct
+    questionError.innerHTML = ''
     questionPool.correctAnswer(currentQuestion)
     updateQuestionLog(questionStack)
     showQueryStats(questionPool, statsDiv)
@@ -102,6 +103,7 @@ function clearQuestionPanel() {
     currentQuestion = ''
     responseInput.value = ''
     questionDiv.innerHTML = 'end of set!'
+    hideQuestionInput()
 }
 
 // clear UI beetween sets
@@ -127,8 +129,21 @@ function countDown(counter, callback) {
     if (counter) { countDown(counter,callback) } else { callback()}}, 1000)
 }
 
+function showQuestionInput() {
+    okButton.classList.remove('hide')
+    responseInput.classList.remove('hide')
+    startButton.classList.add('hide')
+}
+
+function hideQuestionInput() {
+    okButton.classList.add('hide')
+    responseInput.classList.add('hide')
+    startButton.classList.remove('hide')
+}
+
 function start() {
     clearQuiz()
+    showQuestionInput()
     // check settings
     range = parseRange(rangeInput.value)
     if (! range)  {

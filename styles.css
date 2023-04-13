@@ -1,36 +1,45 @@
-* {
+*, *::before, *::after  {
     box-sizing: border-box;
-    font-family: Gotham Rounded, sans-serif;
+    font-family: sans-serif;
     font-weight: normal;
+    font-size: 1.5rem;
 }
 
 body {
-    background-color: rgb(108, 108, 108);
-}
-
-
-div {
-    border: 1px;
-    border-style: dotted;
-    border-color: darkgrceen;
-}
-
-.panel {
-    border-width: 2px;
-    border-style: dashed;
+    padding: 0;
+    margin: 0;
     display: flex;
-    background-color: lightgray;
-    border-color: black;
-    margin: 20px;
-    padding: 20px;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(200, 100%, 20%);
 }
 
-table td, table td * {
-    vertical-align: top;
+.response {
+    width: 80%;
 }
 
-.greet_msg {
-        min-width: 50px;
-        min-height: 50px;
+form {
+    padding: 5px;
 }
 
+
+.container {
+    width: 400px;
+    max-width: 80%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px;
+    text-align: center;
+}
+
+.hide {
+    display: none
+}
+
+.ok-button, .start-button {
+    padding: 10px 20px;
+    
+}
