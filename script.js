@@ -79,13 +79,12 @@ function okButtonListener() {
         return
     }
     // check answer
-    if (responseInput.value != currentQuestion.answer) { 
+    if (responseInput.value != currentQuestion.answer) {
         questionError.innerHTML = 'wrong answer! try again'
         currentQuestion.wrongAnswerCount++
         return
     }
     // when answer is correct
-    questionError.innerHTML = ''
     questionPool.correctAnswer(currentQuestion)
     updateQuestionLog(questionStack)
     showQueryStats(questionPool, statsDiv)
@@ -205,9 +204,9 @@ form.addEventListener('submit', function(e) {
 // events bindings
 startButton.addEventListener('click', startButtonListener)
 okButton.addEventListener('click', okButtonListener)
-responseInput.addEventListener('keydown', (e) => {
-    if (e.code === 'Enter') okButtonListener(e)
-})
+// responseInput.addEventListener('keydown', (e) => {
+//     if (e.code === 'Enter') okButtonListener(e)
+// })
 
 nameInput.addEventListener('keyup', nameInputListener)
 
