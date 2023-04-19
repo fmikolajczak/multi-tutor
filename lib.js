@@ -101,8 +101,6 @@ if (typeof module !== 'undefined') {
 
 function showQueryStats(questionPool, statsDiv) {
     // TODO: complete the function
-    let text_stats = `overall questions: ${questionPool.allCount}<br>`
-    text_stats += `answered questions: ${questionPool.answeredCount}<br>`
-    text_stats += `wrong answers: ${questionPool.wrongCount}<br>`
+    let text_stats = `q: ${questionPool.answeredCount}/${questionPool.allCount} <span class='wrong'>(wa: ${questionPool.wrongCount})</span>`
     statsDiv.innerHTML = text_stats
 }

@@ -17,6 +17,14 @@ body {
     background-color: hsl(200, 100%, 20%);
 }
 
+.statistics, .wrong {
+    font-size: 0.5rem;
+}
+
+.wrong {
+    color:red
+}
+
 .response {
     width: 80%;
 }

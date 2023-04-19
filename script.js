@@ -57,6 +57,11 @@ function showNextQuestion () {
     responseInput.value = ''
     questionError.innerHTML = ''
     currentQuestion = newQuestion(range)
+    if(! currentQuestion) {
+        endQuiz()
+        questionDiv.innerHTML = 'there is no more questions!'
+        return
+    }
     console.log(`showNextQuestion: currentQuestion: ${currentQuestion}`)
     showMessage(`${currentQuestion.a} x ${currentQuestion.b} = `)
     responseInput.focus()
@@ -71,6 +76,11 @@ function updateQuestionLog(questionStack) {
     })
 }
 
+function endQuiz() {
+    saveQuestions(questionPool)
+        clearQuestionPanel()
+        showSummary(questionStack)
+}
 
 function okButtonListener() {
     // if there is no question then start new quiz
@@ -92,9 +102,7 @@ function okButtonListener() {
     if (questionLeft > 0) {
         showNextQuestion()
     } else {
-        saveQuestions(questionPool)
-        clearQuestionPanel()
-        showSummary(questionStack)
+        endQuiz()
     }
 }
 
