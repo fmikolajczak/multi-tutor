@@ -78,8 +78,8 @@ function updateQuestionLog(questionStack) {
 
 function endQuiz() {
     saveQuestions(questionPool)
-        clearQuestionPanel()
-        showSummary(questionStack)
+    clearQuestionPanel()
+    showSummary(questionStack)
 }
 
 function okButtonListener() {
@@ -109,6 +109,7 @@ function okButtonListener() {
 function clearQuestionPanel() {
     currentQuestion = ''
     responseInput.value = ''
+    questionError.innerHTML = ''
     questionDiv.innerHTML = 'end of set!'
     hideQuestionInput()
 }
