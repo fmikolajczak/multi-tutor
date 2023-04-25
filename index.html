@@ -26,16 +26,24 @@
     <div class="controls">
         <button class="ok-button hide">RESET</button>
         <button class="start-button" data-start>START</button>
+        <button class="settings-button" data-settings>⚙</button>
     </div>
-    <div class="panel configuration-panel hide">
-        <div>
+    <div id='configuration' class="panel configuration-panel hide">
+        <div class='hide'> 
             <h3>Application settings</h3>
             Name: <input type="text" id="name" name="Your name" /><br>
             Range of numbers:
             <input type="text" id="range" class="number-range" value="1-10" maxlength="7" size="7">
         </div>
-        <div id="greet_msg" class="greet_msg">
+        <div id="greet_msg" class="greet_msg hide">
         </div>
+        Reset question pool. Delete statistics and progress. <br>
+        I know what I am doing!
+        <label class="switch">
+            <input type="checkbox" data-reset-checkbox>
+            <span class="slider round"></span>
+        </label><br>
+        <button data-reset>RESET</button><br>
     </div>
     <div class="panel results-panel hide">
         <h3>Test results</h3>

@@ -16,6 +16,10 @@ const statsDiv = document.getElementById('statistics')
 const nameInput = document.getElementById('name')
 const greetMsgDiv = document.getElementById('greet_msg')
 const form = document.getElementsByTagName('form')?.item(0)
+const settingsButton = document.querySelector('[data-settings]')
+const configurationPanel = document.getElementById('configuration')
+const resetButton = document.querySelector('[data-reset]')
+const resetCheckbox = document.querySelector('[data-reset-checkbox]')
 
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
@@ -180,6 +184,11 @@ function saveName(name) {
     if(name) localStorage.setItem('name', name)
 }
 
+function clearStorage() {
+    localStorage.clear()
+    loadStorage()
+}
+
 function loadStorage() {
     // player name
     let name = localStorage.getItem('name')
@@ -210,14 +219,32 @@ form.addEventListener('submit', function(e) {
     e.preventDefault()
 })
 
+function toggleSettings() {
+    if (configurationPanel.classList.contains('hide')) {
+        configurationPanel.classList.remove('hide')
+        startButton.classList.add('hide')
+    } else {
+        configurationPanel.classList.add('hide')
+        startButton.classList.remove('hide')
+    }
+}
+
+function resetButtonListener() {
+    if (resetCheckbox.checked) {
+        clearStorage()
+        toggleSettings()
+    }
+}
 // events bindings
 startButton.addEventListener('click', startButtonListener)
 okButton.addEventListener('click', okButtonListener)
+settingsButton.addEventListener('click', toggleSettings)
+resetButton.addEventListener('click', resetButtonListener)
 // responseInput.addEventListener('keydown', (e) => {
 //     if (e.code === 'Enter') okButtonListener(e)
 // })
 
-nameInput.addEventListener('keyup', nameInputListener)
+//nameInput.addEventListener('keyup', nameInputListener)
 
 
 loadStorage()

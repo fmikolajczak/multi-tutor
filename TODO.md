@@ -8,9 +8,11 @@
 - FIX bug, erro message show after 
 
 ### In Progress ...
-- improve the look
+- add reset question pool option
+- 
+
 
 
 ### Done ✓
 - handle the case when you run out of questions
-
+- improve the look
