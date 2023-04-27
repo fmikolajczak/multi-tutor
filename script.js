@@ -1,7 +1,7 @@
 // constance definitions
 const waitForStart = 1
 const questionsPerSet = 5
-
+const maxAnswerTime = 10000
 
 // GUI element bindings
 const questionDiv = document.getElementById('question')
@@ -56,7 +56,10 @@ let currentQuiz = {
     correctAnswers: undefined,    
 }
 
+let questionStartTime
+
 function showNextQuestion () {
+    questionStartTime = Date.now()
     questionLeft--
     responseInput.value = ''
     questionError.innerHTML = ''
@@ -99,6 +102,8 @@ function okButtonListener() {
         return
     }
     // when answer is correct
+    let questionTime = Date.now() - questionStartTime
+    currentQuestion.time = ( questionTime < maxAnswerTime ? questionTime : maxAnswerTime )
     questionPool.correctAnswer(currentQuestion)
     updateQuestionLog(questionStack)
     showQueryStats(questionPool, statsDiv)

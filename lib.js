@@ -60,6 +60,7 @@ class QuestionPool {
         currentQuestion.wrongAnswerCount = question.wrongAnswerCount
         this.usedQueries.push(currentQuestion)
         console.log(`question answered: ${currentQuestion.a}x${currentQuestion.b}=${currentQuestion.answer}`)
+        console.log(`answer time: ${currentQuestion.time}`)
     }
 
     get nextQuestion() {
