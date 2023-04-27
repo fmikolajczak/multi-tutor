@@ -145,12 +145,14 @@ function showQuestionInput() {
     okButton.classList.remove('hide')
     responseInput.classList.remove('hide')
     startButton.classList.add('hide')
+    settingsButton.classList.add('hide')
 }
 
 function hideQuestionInput() {
     okButton.classList.add('hide')
     responseInput.classList.add('hide')
     startButton.classList.remove('hide')
+    settingsButton.classList.remove('hide')
 }
 
 function start() {
