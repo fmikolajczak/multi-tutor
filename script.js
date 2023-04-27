@@ -221,6 +221,17 @@ function saveQuestions(questionPool) {
     localStorage.setItem('questionsAsked', JSON.stringify(questionPool.questionsAsked))
 }
 
+// function for debug purpose 
+function answerLeftQuestions(questionPool) {
+    while(true) {
+        question = questionPool.nextQuestion
+        if(! question) break;
+        question.time = Math.random() * 5 + 0.5
+        questionPool.correctAnswer(question)
+    }
+    saveQuestions(questionPool)
+}
+
 // prevent form from submitting
 form.addEventListener('submit', function(e) {
     e.preventDefault()
