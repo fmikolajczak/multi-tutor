@@ -33,7 +33,7 @@ function parseRange(range) {
 }
 
 class QuestionPool {
-    constructor(range, questionsLeft, questonsAsked) {
+    constructor(range, questionsLeft, questonsAsked, totalAnswersCounter) {
         this.mode = 1
         if (questionsLeft && questonsAsked) {
             this.queryList = questionsLeft
@@ -59,9 +59,11 @@ class QuestionPool {
             this.mode = 2
             this.#sortAnsweredQuestions()
         }
+        this.totalAnswersCounter = (totalAnswersCounter ? Number(totalAnswersCounter) : 0)
     }
 
     correctAnswer(question) {
+        this.totalAnswersCounter = this.totalAnswersCounter + 1
         if (this.mode == 1) {
             this.queryList.splice(this.index, 1)[0]
             this.usedQueries.push(question)
@@ -145,6 +147,7 @@ if (typeof module !== 'undefined') {
 function showQueryStats(questionPool, statsDiv) {
     // TODO: complete the function
     let text_stats = `q: ${questionPool.answeredCount}/${questionPool.allCount} <span class='wrong'>(wa: ${questionPool.wrongCount})</span> pass: ${questionPool.mode}`
+    text_stats = text_stats + ` total: ${questionPool.totalAnswersCounter}`
     statsDiv.innerHTML = text_stats
 }
 

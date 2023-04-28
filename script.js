@@ -1,7 +1,7 @@
 // constance definitions
 const waitForStart = 1
 const questionsPerSet = 5
-const maxAnswerTime = 10000
+const maxAnswerTime = 20000
 
 // GUI element bindings
 const questionDiv = document.getElementById('question')
@@ -207,12 +207,14 @@ function loadStorage() {
     console.log('try to load questions from storage')
     let questionsAsked = localStorage.getItem('questionsAsked')
     let questionsLeft = localStorage.getItem('questionsLeft')
+    let totalAnswersCounter = localStorage.getItem('totalAnswersCounter')
     console.log(`questionsAsked: ${questionsAsked}`)
     console.log(`questionsLeft: ${questionsLeft}`)
     if (questionsLeft) {
         questionPool = new QuestionPool(undefined,
             JSON.parse(questionsLeft),
-            JSON.parse(questionsAsked))
+            JSON.parse(questionsAsked),
+            totalAnswersCounter)
         showQueryStats(questionPool, statsDiv)
         console.log('ok, i had have loaded data from localStorage')
     }    
@@ -225,6 +227,7 @@ function debugPrintQuestionsAsked(questionPool) {
 function saveQuestions(questionPool) {
     localStorage.setItem('questionsLeft', JSON.stringify(questionPool.questionsLeft))
     localStorage.setItem('questionsAsked', JSON.stringify(questionPool.questionsAsked))
+    localStorage.setItem('totalAnswersCounter', questionPool.totalAnswersCounter)
 }
 
 // function for debug purpose 
@@ -232,7 +235,7 @@ function answerLeftQuestions(questionPool) {
     while(questionPool.mode == 1) {
         question = questionPool.nextQuestion
         if(! question) break;
-        question.time = Math.floor(Math.random() * 5000 + 500)
+        question.time = Math.floor(Math.random() * maxAnswerTime/2 + 500)
         questionPool.correctAnswer(question)
     }
     saveQuestions(questionPool)
