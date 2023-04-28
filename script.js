@@ -21,6 +21,12 @@ const configurationPanel = document.getElementById('configuration')
 const resetButton = document.querySelector('[data-reset]')
 const resetCheckbox = document.querySelector('[data-reset-checkbox]')
 
+// range from which quiz choose numbers, array of 2 numbers [a, b]
+let range
+
+// run mode 1: 1st pass untill all question answered, 2: next pass, worst answers
+let mode = 1
+
 function showErrorMessage(msg) {
     showMessage("<font color ='#ff0000'>" + msg + "</font>")
 }
@@ -28,10 +34,6 @@ function showErrorMessage(msg) {
 function showMessage(msg, div = questionDiv ) {
     div.innerHTML = msg
 }
-
-// range from which quiz choose numbers, array of 2 numbers [a, b]
-let range
-
 function getRandomFromRange(range) {
     return range[0] + Math.floor(Math.random() * (range[1] - range[0]))
 }
@@ -226,7 +228,7 @@ function answerLeftQuestions(questionPool) {
     while(true) {
         question = questionPool.nextQuestion
         if(! question) break;
-        question.time = Math.random() * 5 + 0.5
+        question.time = Math.floor(Math.random() * 5000 + 500)
         questionPool.correctAnswer(question)
     }
     saveQuestions(questionPool)
