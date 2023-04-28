@@ -218,6 +218,10 @@ function loadStorage() {
     }    
 }
 
+function debugPrintQuestionsAsked(questionPool) {
+    console.log(`quesion asked: ${JSON.stringify(questionPool.questionsAsked)}`)
+}
+
 function saveQuestions(questionPool) {
     localStorage.setItem('questionsLeft', JSON.stringify(questionPool.questionsLeft))
     localStorage.setItem('questionsAsked', JSON.stringify(questionPool.questionsAsked))
@@ -225,7 +229,7 @@ function saveQuestions(questionPool) {
 
 // function for debug purpose 
 function answerLeftQuestions(questionPool) {
-    while(true) {
+    while(questionPool.mode == 1) {
         question = questionPool.nextQuestion
         if(! question) break;
         question.time = Math.floor(Math.random() * 5000 + 500)

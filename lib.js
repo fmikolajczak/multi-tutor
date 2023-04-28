@@ -34,40 +34,80 @@ function parseRange(range) {
 
 class QuestionPool {
     constructor(range, questionsLeft, questonsAsked) {
+        this.mode = 1
         if (questionsLeft && questonsAsked) {
             this.queryList = questionsLeft
             this.usedQueries = questonsAsked
-          return   
-        }
-        this.queryList = []
-        this.usedQueries = []
-        for (let i = range[0]; i <= range[1] ; i++ ) {
-            for( let j = range[0] ; j <= range[1] ; j ++) {
-                let query = {
-                    a: i,
-                    b: j,
-                    answer: i * j,
-                    wrongAnswerCount: 0,
+        } else {
+            this.queryList = []
+            this.usedQueries = []
+            for (let i = range[0]; i <= range[1]; i++) {
+                for (let j = range[0]; j <= range[1]; j++) {
+                    let query = {
+                        a: i,
+                        b: j,
+                        answer: i * j,
+                        wrongAnswerCount: 0,
+                    }
+                    console.log(`constructor query: ${query.a} ${query.b}`)
+                    this.queryList.push(query)
                 }
-                console.log(`constructor query: ${query.a} ${query.b}`)
-                this.queryList.push(query)
             }
+        }
+        this.lastQuestions = []
+        if (this.queryList.length == 0) {
+            this.mode = 2
+            this.#sortAnsweredQuestions()
         }
     }
 
     correctAnswer(question) {
-        let currentQuestion = this.queryList.splice(this.index, 1)[0]
-        currentQuestion.wrongAnswerCount = question.wrongAnswerCount
-        this.usedQueries.push(currentQuestion)
-        console.log(`question answered: ${currentQuestion.a}x${currentQuestion.b}=${currentQuestion.answer}`)
-        console.log(`answer time: ${currentQuestion.time}`)
+        if (this.mode == 1) {
+            this.queryList.splice(this.index, 1)[0]
+            this.usedQueries.push(question)
+            this.#addLastQuestion(question)
+        } else if (this.mode == 2) {
+            //TODO: rotate quesions
+            this.questionsAsked.shift()
+            this.questionsAsked.push(question)
+        }
+        console.log(`question answered: ${question.a}x${question.b}=${question.answer}`)
+        console.log(`answer time: ${question.time}`)
+    }
+    
+    #addLastQuestion(question) {
+        if (this.lastQuestions.length >= 5) {
+            this.lastQuestions.shift()
+        }
+        this.lastQuestions.push(question)
+    }
+
+    #sortAnsweredQuestions() {
+        this.usedQueries.sort(QuestionPool.#answeredQuestionCompareFunction)
+        console.log('question sorted')
+    }
+
+    static #answeredQuestionCompareFunction(q1, q2) {
+        const q1score = q1.wrongAnswerCount * 10000 + q1.time
+        const q2score = q2.wrongAnswerCount * 10000 + q2.time
+        return q2score - q1score
     }
 
     get nextQuestion() {
+        // return new question
         if(this.queryList.length > 0) {
             this.index = Math.floor(Math.random() * this.queryList.length) 
             console.log(`nextQuestion index: ${this.index}`)
             return this.queryList[this.index]
+        }
+        // switch mode
+        if (this.queryList.length == 0 && this.mode == 1) {
+            this.mode = 2
+        }
+        // return worst answered question
+        if (this.queryList.length == 0 && this.mode == 2) {
+            // should question which answer got most wrong answers and/or max answer time
+            return this.questionsAsked[0]
         }
     }
 
@@ -102,6 +142,7 @@ if (typeof module !== 'undefined') {
 
 function showQueryStats(questionPool, statsDiv) {
     // TODO: complete the function
-    let text_stats = `q: ${questionPool.answeredCount}/${questionPool.allCount} <span class='wrong'>(wa: ${questionPool.wrongCount})</span>`
+    let text_stats = `q: ${questionPool.answeredCount}/${questionPool.allCount} <span class='wrong'>(wa: ${questionPool.wrongCount})</span> pass: ${questionPool.mode}`
     statsDiv.innerHTML = text_stats
 }
+
