@@ -66,6 +66,7 @@ function showNextQuestion () {
     responseInput.value = ''
     questionError.innerHTML = ''
     currentQuestion = newQuestion(range)
+    okButton.disabled = false
     if(! currentQuestion) {
         endQuiz()
         questionDiv.innerHTML = 'there is no more questions!'
@@ -122,6 +123,7 @@ function clearQuestionPanel() {
     responseInput.value = ''
     questionError.innerHTML = ''
     questionDiv.innerHTML = 'end of set!'
+    okButton.disabled = true
     hideQuestionInput()
 }
 
