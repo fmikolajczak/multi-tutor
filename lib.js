@@ -107,7 +107,9 @@ class QuestionPool {
         // return worst answered question
         if (this.queryList.length == 0 && this.mode == 2) {
             // should question which answer got most wrong answers and/or max answer time
-            return this.questionsAsked[0]
+            const nextQuestion = this.questionsAsked[0]
+            nextQuestion.wrongAnswerCount = 0
+            return nextQuestion
         }
     }
 
